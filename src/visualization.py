@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 
 qatar_embassies_path = "interim/qatar_embassies_stats.xlsx"
 all_qatar_embassies_path = "interim/all_qatar_embassies_df.xlsx"
+all_global_embassies_path = "interim/all_global_embassies.xlsx"
 
 # Show a warning message
 st.warning(
@@ -17,21 +18,29 @@ def load_data():
     """Loads the data from the Excel file."""
     data = pd.read_excel(qatar_embassies_path, engine="openpyxl")
     all_qatar_embassies = pd.read_excel(all_qatar_embassies_path, engine="openpyxl")
-    
-    return data, all_qatar_embassies
+    all_global_embassies = pd.read_excel(all_global_embassies_path, engine="openpyxl")
+
+    return data, all_qatar_embassies, all_global_embassies
 
 
 with st.spinner("Loading data..."):
-    data, all_qatar_embassies = load_data()
+    data, all_qatar_embassies, all_global_embassies = load_data()
     st.success("Data loaded successfully")
 
 
-# Show the raw data
-st.subheader("Country specific data")
-st.write("Expand to view full dataset")
+st.subheader("Qatari Embassies")
+count_df_qatar_embassies = (
+    all_qatar_embassies.groupby("screen_name").size().sort_values(ascending=False)
+)
+st.bar_chart(count_df_qatar_embassies)
 
-st.write(data)
+st.subheader("Embassies in Qatar")
+count_df_global_embassies = (
+    all_global_embassies.groupby("screen_name").size().sort_values(ascending=False)
+)
+st.bar_chart(count_df_global_embassies)
 
+st.markdown("""---""")
 
 with st.sidebar:
     st.title("Qatar Embassies Stats")
@@ -51,11 +60,3 @@ st.markdown(
     * Hashtags: {country_data.iloc[5]}
     """
 )
-
-
-# Group by the "screen_name" column
-count_df = all_qatar_embassies.groupby("screen_name").size()
-# Sort the data
-count_df = count_df.sort_values(ascending=False)
-
-st.bar_chart(count_df)
