@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 qatar_embassies_path = "interim/qatar_embassies_stats.xlsx"
+global_embassies_path = "interim/global_embassies_stats.xlsx"
 all_qatar_embassies_path = "interim/all_qatar_embassies_df.xlsx"
 all_global_embassies_path = "interim/all_global_embassies.xlsx"
 
@@ -17,14 +18,15 @@ st.warning(
 def load_data():
     """Loads the data from the Excel file."""
     data = pd.read_excel(qatar_embassies_path, engine="openpyxl")
+    data_globaL_embassies = pd.read_excel(global_embassies_path, engine="openpyxl")
     all_qatar_embassies = pd.read_excel(all_qatar_embassies_path, engine="openpyxl")
     all_global_embassies = pd.read_excel(all_global_embassies_path, engine="openpyxl")
 
-    return data, all_qatar_embassies, all_global_embassies
+    return data, data_globaL_embassies, all_qatar_embassies, all_global_embassies
 
 
 with st.spinner("Loading data..."):
-    data, all_qatar_embassies, all_global_embassies = load_data()
+    data, data_globaL_embassies, all_qatar_embassies, all_global_embassies = load_data()
     st.success("Data loaded successfully")
 
 
@@ -48,8 +50,14 @@ with st.sidebar:
     country = st.selectbox("Country", data.columns[1:])
     country_data = data.loc[:, country]
 
+with st.sidebar:
+    st.title("World Cup embassies in Qatar")
+    st.write("Select a country from the dropdown below")
+    world_cup_country = st.selectbox("Country", data_globaL_embassies.columns[1:])
+    world_cup_country_data = data_globaL_embassies.loc[:, world_cup_country]
+    
 
-st.subheader(f"{country} Stats")
+st.subheader(f"Stats of Qatar Embassy in {country}")
 st.markdown(
     f"""
     * Total Tweets: {country_data.iloc[0]}
@@ -58,5 +66,17 @@ st.markdown(
     * Unique Dates: {country_data.iloc[3]}
     * Languages: {country_data.iloc[4]}
     * Hashtags: {country_data.iloc[5]}
+    """
+)
+
+st.subheader(f"Stats of {world_cup_country} Embassy in Qatar")
+st.markdown(
+    f"""
+    * Total Tweets: {world_cup_country_data.iloc[0]}
+    * Original Tweets: {world_cup_country_data.iloc[1]}
+    * Retweets: {world_cup_country_data.iloc[2]}
+    * Unique Dates: {world_cup_country_data.iloc[3]}
+    * Languages: {world_cup_country_data.iloc[4]}
+    * Hashtags: {world_cup_country_data.iloc[5]}
     """
 )
