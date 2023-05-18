@@ -34,12 +34,32 @@ st.subheader("Qatari Embassies")
 count_df_qatar_embassies = (
     all_qatar_embassies.groupby("screen_name").size().sort_values(ascending=False)
 )
+
+st.write("Language distribution")
+# Plot the language distribution
+st.bar_chart(all_qatar_embassies['languages'].value_counts())
+st.write("Refer to this page to get the list of ISO 639-1 codes:https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes")
+
+st.write("Hashtag distribution")
+st.write(f"**{all_qatar_embassies['hashtags'].isnull().sum()}** tweets do not contains hashtags")
+
+st.write("Tweet count distribution")
 st.bar_chart(count_df_qatar_embassies)
 
 st.subheader("Embassies in Qatar")
 count_df_global_embassies = (
     all_global_embassies.groupby("screen_name").size().sort_values(ascending=False)
 )
+
+st.write("Language distribution")
+# Plot the language distribution
+st.bar_chart(all_global_embassies['languages'].value_counts())
+st.write("Refer to this page to get the list of ISO 639-1 codes:https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes")
+
+st.write("Hashtag distribution")
+st.write(f"**{all_global_embassies['hashtags'].isnull().sum()}** tweets do not contains hashtags")
+
+st.write("Tweet count distribution")
 st.bar_chart(count_df_global_embassies)
 
 st.markdown("""---""")
