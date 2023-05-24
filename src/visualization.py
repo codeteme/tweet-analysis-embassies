@@ -7,11 +7,11 @@ global_embassies_path = "interim/global_embassies_stats.xlsx"
 all_qatar_embassies_path = "interim/all_qatar_embassies_df.xlsx"
 all_global_embassies_path = "interim/all_global_embassies.xlsx"
 
-# Show a warning message
-st.warning(
-    """This app is still under development. It currently only looks at the Qatari Embassies' tweets.
-    Please use it with caution"""
-)
+# # Show a warning message
+# st.warning(
+#     """This app is still under development. It currently only looks at the Qatari Embassies' tweets.
+#     Please use it with caution"""
+# )
 
 
 @st.cache_data
@@ -86,6 +86,8 @@ st.markdown(
     * Unique Dates: {country_data.iloc[3]}
     * Languages: {country_data.iloc[4]}
     * Hashtags: {country_data.iloc[5]}
+    * Tweets with Images: {country_data.iloc[6]}
+    * Tweets with Videos: {country_data.iloc[7]}
     """
 )
 
@@ -98,5 +100,7 @@ st.markdown(
     * Unique Dates: {world_cup_country_data.iloc[3]}
     * Languages: {world_cup_country_data.iloc[4]}
     * Hashtags: {world_cup_country_data.iloc[5]}
+    * Tweets with Images: {world_cup_country_data.iloc[6]}
+    * Tweets with Videos: {world_cup_country_data.iloc[7]}
     """
 )
